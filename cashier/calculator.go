@@ -2,16 +2,11 @@ package cashier
 
 import (
 	"bitgin/cashier/factory"
+	"bitgin/cashier/model"
 )
 
 type Calculator factory.Calculator
 
-func New(memberID uint64, productID uint64, usePoints uint64) Calculator {
-	memberFactory := factory.NewMember()
-	member := memberFactory.GetDataByID(memberID)
-
-	productFactory := factory.NewProduct()
-	product := productFactory.GetDataByID(productID)
-
+func New(member *model.Member, product *model.Product, usePoints uint64) Calculator {
 	return factory.NewCalculator(member, product, usePoints)
 }
