@@ -6,53 +6,67 @@ type Calculator interface {
 	GetAmount() uint
 }
 
-type NormalCalculator struct {
+type CalculatorA struct {
 	price uint
 }
 
-type MembershipCalculator struct {
-	price      uint
-	percentOff float32
+type CalculatorB struct {
+	price                uint
+	membershipPercentOff float32
 }
 
-type PointCalculator struct {
+type CalculatorC struct {
 	price     uint
 	usePoints uint
 	pointRate float32
 }
 
-func NewCalculator(member *model.Member, product *model.Product, usePoints uint) Calculator {
-	switch product.Promotion.Slug {
-	case model.PromotionSlugMembership:
-		return &MembershipCalculator{
-			price:      product.Price,
-			percentOff: member.MembershipLevel.PercentOff,
+type CalculatorD struct {
+	price                uint
+	usePoints            uint
+	pointRate            float32
+	membershipPercentOff float32
+}
+
+func NewCalculator(product *model.Product, usePoints uint) Calculator {
+	switch product.Promotion.Code {
+	case model.PromotionCodeB:
+		return &CalculatorB{
+			price:                product.Price,
+			membershipPercentOff: product.Promotion.PromotionMembershipLevel.MembershipPercentOff,
 		}
-	case model.PromotionSlugPoint:
-		return &PointCalculator{
+	case model.PromotionCodeC:
+		return &CalculatorC{
 			price:     product.Price,
-			pointRate: product.Promotion.PointRate,
 			usePoints: usePoints,
+			pointRate: product.Promotion.PromotionMembershipLevel.PointRate,
+		}
+	case model.PromotionCodeD:
+		return &CalculatorD{
+			price:                product.Price,
+			usePoints:            usePoints,
+			pointRate:            product.Promotion.PromotionMembershipLevel.PointRate,
+			membershipPercentOff: product.Promotion.PromotionMembershipLevel.MembershipPercentOff,
 		}
 	default:
-		return &NormalCalculator{
+		return &CalculatorA{
 			price: product.Price,
 		}
 	}
 }
 
-func (nc *NormalCalculator) GetAmount() (amount uint) {
-	return nc.price
+func (ca *CalculatorA) GetAmount() (amount uint) {
+	return ca.price
 }
 
-func (mc *MembershipCalculator) GetAmount() (amount uint) {
-	amount = uint(float32(mc.price) * mc.percentOff)
+func (cb *CalculatorB) GetAmount() (amount uint) {
+	amount = uint(float32(cb.price) * cb.membershipPercentOff)
 	return
 }
 
-func (pc *PointCalculator) GetAmount() (amount uint) {
-	amount = pc.price
-	discount := uint(float32(pc.usePoints) * pc.pointRate)
+func (cc *CalculatorC) GetAmount() (amount uint) {
+	amount = cc.price
+	discount := uint(float32(cc.usePoints) * cc.pointRate)
 
 	if discount <= 0 {
 		return
@@ -63,5 +77,24 @@ func (pc *PointCalculator) GetAmount() (amount uint) {
 	}
 
 	amount -= discount
+	return
+}
+
+func (cd *CalculatorD) GetAmount() (amount uint) {
+	cc := &CalculatorC{
+		price:     cd.price,
+		usePoints: cd.usePoints,
+		pointRate: cd.pointRate,
+	}
+
+	amount = cc.GetAmount()
+
+	if amount == 0 {
+		return
+	}
+	if cd.usePoints >= 100 {
+		amount = uint(float32(amount) * cd.membershipPercentOff)
+	}
+
 	return
 }

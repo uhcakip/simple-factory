@@ -7,6 +7,6 @@ import (
 
 type Calculator factory.Calculator
 
-func New(member *model.Member, product *model.Product, usePoints uint) Calculator {
-	return factory.NewCalculator(member, product, usePoints)
+func New(product *model.Product, usePoints uint) Calculator {
+	return factory.NewCalculator(product, usePoints)
 }
