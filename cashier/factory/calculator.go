@@ -1,6 +1,6 @@
 package factory
 
-import "bitgin/cashier/model"
+import "github.com/uhcakip/simple-factory/cashier/model"
 
 type Calculator interface {
 	GetAmount() uint

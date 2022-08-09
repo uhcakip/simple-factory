@@ -1,9 +1,9 @@
 package main
 
 import (
-	"bitgin/cashier"
-	"bitgin/cashier/model"
 	"fmt"
+	"github.com/uhcakip/simple-factory/cashier"
+	"github.com/uhcakip/simple-factory/cashier/model"
 )
 
 func main() {

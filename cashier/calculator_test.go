@@ -1,8 +1,8 @@
 package cashier
 
 import (
-	"bitgin/cashier/model"
 	"github.com/stretchr/testify/assert"
+	"github.com/uhcakip/simple-factory/cashier/model"
 	"testing"
 )
 

@@ -1,4 +1,4 @@
-module bitgin
+module github.com/uhcakip/simple-factory
 
 go 1.18
 

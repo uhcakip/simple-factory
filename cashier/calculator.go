@@ -1,8 +1,8 @@
 package cashier
 
 import (
-	"bitgin/cashier/factory"
-	"bitgin/cashier/model"
+	"github.com/uhcakip/simple-factory/cashier/factory"
+	"github.com/uhcakip/simple-factory/cashier/model"
 )
 
 type Calculator factory.Calculator
