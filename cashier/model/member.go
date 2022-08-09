@@ -1,4 +1,4 @@
-package factory
+package model
 
 type MemberStatus uint8
 
@@ -21,22 +21,4 @@ type MembershipLevel struct {
 	ID         uint64
 	Title      string
 	PercentOff float32
-}
-
-func NewMember() Member {
-	return Member{}
-}
-
-func (m Member) GetDataByID(id uint64) *Member {
-	return &Member{
-		ID:     id,
-		Name:   "Bob",
-		Status: MemberStatusActive,
-		Points: 1000,
-		MembershipLevel: &MembershipLevel{
-			ID:         1,
-			Title:      "Normal",
-			PercentOff: 1,
-		},
-	}
 }

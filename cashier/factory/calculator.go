@@ -1,5 +1,7 @@
 package factory
 
+import "bitgin/cashier/model"
+
 type Calculator interface {
 	GetAmount() uint64
 }
@@ -19,14 +21,14 @@ type PointCalculator struct {
 	pointRate float32
 }
 
-func NewCalculator(member *Member, product *Product, usePoints uint64) Calculator {
+func NewCalculator(member *model.Member, product *model.Product, usePoints uint64) Calculator {
 	switch product.Promotion.Slug {
-	case PromotionSlugMembership:
+	case model.PromotionSlugMembership:
 		return &MembershipCalculator{
 			price:      product.Price,
 			percentOff: member.MembershipLevel.PercentOff,
 		}
-	case PromotionSlugPoint:
+	case model.PromotionSlugPoint:
 		return &PointCalculator{
 			price:     product.Price,
 			pointRate: product.Promotion.PointRate,
