@@ -46,18 +46,7 @@ func (nc *NormalCalculator) GetAmount() (amount uint64) {
 }
 
 func (mc *MembershipCalculator) GetAmount() (amount uint64) {
-	amount = mc.price
-	discount := uint64(float32(mc.price) * mc.percentOff)
-
-	if discount <= 0 {
-		return
-	}
-	if discount >= amount {
-		amount = 0
-		return
-	}
-
-	amount -= discount
+	amount = uint64(float32(mc.price) * mc.percentOff)
 	return
 }
 
