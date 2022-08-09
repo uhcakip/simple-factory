@@ -9,7 +9,7 @@ const (
 
 // Member type
 type Member struct {
-	ID              uint64
+	ID              uint
 	Name            string
 	Status          MemberStatus
 	Points          uint
@@ -18,7 +18,7 @@ type Member struct {
 
 // MembershipLevel type
 type MembershipLevel struct {
-	ID         uint64
+	ID         uint
 	Title      string
 	PercentOff float32
 }

@@ -30,7 +30,7 @@ func TestMain(m *testing.M) {
 	}
 
 	product = &model.Product{
-		Price: uint64(870),
+		Price: uint(870),
 		Title: "Product",
 	}
 
@@ -54,8 +54,8 @@ func TestNewMembershipCalculator(t *testing.T) {
 		tml.getLevelThree(),
 	}
 
-	expectedAmounts := []uint64{826, 783, 739}
-	actualAmounts := make([]uint64, 3)
+	expectedAmounts := []uint{826, 783, 739}
+	actualAmounts := make([]uint, 3)
 
 	for i, membershipLevel := range membershipLevels {
 		member.MembershipLevel = membershipLevel
@@ -72,7 +72,7 @@ func TestNewPointCalculator(t *testing.T) {
 	calculator := New(member, product, 83)
 	// 83 * 0.8 = 66.4 --> 66
 	// 807 - 66
-	assert.Equal(t, uint64(804), calculator.GetAmount())
+	assert.Equal(t, uint(804), calculator.GetAmount())
 }
 
 func (tml testMembershipLevel) getNormal() *model.MembershipLevel {

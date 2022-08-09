@@ -3,25 +3,25 @@ package factory
 import "bitgin/cashier/model"
 
 type Calculator interface {
-	GetAmount() uint64
+	GetAmount() uint
 }
 
 type NormalCalculator struct {
-	price uint64
+	price uint
 }
 
 type MembershipCalculator struct {
-	price      uint64
+	price      uint
 	percentOff float32
 }
 
 type PointCalculator struct {
-	price     uint64
-	usePoints uint64
+	price     uint
+	usePoints uint
 	pointRate float32
 }
 
-func NewCalculator(member *model.Member, product *model.Product, usePoints uint64) Calculator {
+func NewCalculator(member *model.Member, product *model.Product, usePoints uint) Calculator {
 	switch product.Promotion.Slug {
 	case model.PromotionSlugMembership:
 		return &MembershipCalculator{
@@ -41,18 +41,18 @@ func NewCalculator(member *model.Member, product *model.Product, usePoints uint6
 	}
 }
 
-func (nc *NormalCalculator) GetAmount() (amount uint64) {
+func (nc *NormalCalculator) GetAmount() (amount uint) {
 	return nc.price
 }
 
-func (mc *MembershipCalculator) GetAmount() (amount uint64) {
-	amount = uint64(float32(mc.price) * mc.percentOff)
+func (mc *MembershipCalculator) GetAmount() (amount uint) {
+	amount = uint(float32(mc.price) * mc.percentOff)
 	return
 }
 
-func (pc *PointCalculator) GetAmount() (amount uint64) {
+func (pc *PointCalculator) GetAmount() (amount uint) {
 	amount = pc.price
-	discount := uint64(float32(pc.usePoints) * pc.pointRate)
+	discount := uint(float32(pc.usePoints) * pc.pointRate)
 
 	if discount <= 0 {
 		return

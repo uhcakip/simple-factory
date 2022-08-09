@@ -8,15 +8,15 @@ const (
 )
 
 type Promotion struct {
-	ID        uint64
+	ID        uint
 	Slug      PromotionSlug
 	Title     string
 	PointRate float32
 }
 
 type Product struct {
-	ID        uint64
-	Price     uint64
+	ID        uint
+	Price     uint
 	Title     string
 	Promotion *Promotion
 }
